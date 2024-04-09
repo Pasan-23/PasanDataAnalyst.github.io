@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jupyter Notebook Code</title>
+</head>
+<body>
+    <pre id="code-display"></pre>
+
+    <script>
+        // Function to read and parse the .ipynb file
+        function readNotebook() {
+            // Path to the merge.ipynb file
+            var filePath = 'cyclistic/merge.ipynb';
+
+            // Fetch the notebook file
+            fetch(filePath)
+                .then(response => response.json())
+                .then(data => displayCode(data))
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Function to extract and display code cells
+        function displayCode(notebook) {
+            var codeDisplay = document.getElementById('code-display');
+            codeDisplay.textContent = '';
+
+            notebook.cells.forEach(function(cell) {
+                if (cell.cell_type === 'code') {
+                    codeDisplay.textContent += '\n' + cell.source.join('\n') + '\n\n';
+                }
+            });
+        }
+
+        // Load and display code from the .ipynb file when the webpage loads
+        window.onload = readNotebook;
+    </script>
+</body>
+</html>
